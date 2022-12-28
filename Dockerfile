@@ -6,6 +6,7 @@ ARG BIN_DIR="${HOME}/bin"
 
 ARG FFMPEG_VERSION="4.4.1"
 ARG NASM_VERSION="2.15.05"
+ARG X265_VER="2.5"
 
 RUN apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt-get -y install \
@@ -19,6 +20,7 @@ RUN apt-get update && \
       libfreetype6-dev \
       libgnutls28-dev \
       libmp3lame-dev \
+      libnuma-dev \
       libtool \
       libvorbis-dev \
       meson \
@@ -31,7 +33,7 @@ RUN apt-get update && \
 
 RUN mkdir -p ${SOURCE_DIR} ${BUILD_DIR} ${BIN_DIR}
 
-# Fetch and Install NASM
+# NASM
 RUN curl -o ${SOURCE_DIR}/nasm.tar.bz2 -L https://www.nasm.us/pub/nasm/releasebuilds/${NASM_VERSION}/nasm-${NASM_VERSION}.tar.bz2 && \
     tar xf ${SOURCE_DIR}/nasm.tar.bz2 -C ${BUILD_DIR} && \
     cd ${BUILD_DIR}/nasm-${NASM_VERSION} && \
@@ -40,17 +42,25 @@ RUN curl -o ${SOURCE_DIR}/nasm.tar.bz2 -L https://www.nasm.us/pub/nasm/releasebu
     make && \
     make install
 
-# Fetch and Install x264
+# x264
 RUN curl -o ${SOURCE_DIR}/last_x264.tar.bz2 -L http://download.videolan.org/pub/x264/snapshots/last_x264.tar.bz2 && \
-    tar xf ${SOURCE_DIR}/x264.tar.bz -C ${BUILD_DIR} && \
-    cd ${BUILD_DIR}/x264 && \
+    tar xf ${SOURCE_DIR}/last_x264.tar.bz2 -C ${BUILD_DIR} && \
+    cd ${BUILD_DIR}/x264-snapshot* && \
     PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="${BUILD_DIR}/lib/pkgconfig" ./configure --prefix="${BUILD_DIR}" --bindir="$BIN_DIR" --enable-static --enable-pic && \
     PATH="$BIN_DIR:$PATH" make && \
     make install
 
+# x265
+RUN curl -o ${SOURCE_DIR}/x265_${X265_VER}.tar.gz -L https://bitbucket.org/multicoreware/x265/downloads/x265_${X265_VER}.tar.gz && \
+    tar xf ${SOURCE_DIR}/x265_${X265_VER}.tar.gz -C ${BUILD_DIR} && \
+    cd ${BUILD_DIR}/x265_${X265_VER}/build/linux && \
+    PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_SHARED=off ../../source && \
+    PATH="$HOME/bin:$PATH" make && \
+    make install
+
 # Fetch and Install FFMPEG
-RUN curl -o ${SOURCE_DIR}/ffmpeg.tar.bz2 -L http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
-    tar xf ${SOURCE_DIR}/ffmpeg.tar.bz2 -C ${BUILD_DIR} && \
+RUN curl -o ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -L http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
+    tar xf ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -C ${BUILD_DIR} && \
     cd ${BUILD_DIR}/ffmpeg* && \
     PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="${BUILD_DIR}/lib/pkgconfig" ./configure \
       --prefix="${BUILD_DIR}" \
