@@ -51,7 +51,7 @@ RUN curl -o ${SOURCE_DIR}/x264-stable.tar.bz2 -L https://code.videolan.org/video
     make install
 
 # x265
-RUN curl -o ${SOURCE_DIR}/x265_${X265_VER}.tar.gz -L https://bitbucket.org/multicoreware/x265/downloads/x265_${X265_VER}.tar.gz && \
+RUN curl -o ${SOURCE_DIR}/x265_${X265_VER}.tar.gz -L https://bitbucket.org/multicoreware/x265_git/downloads/x265_${X265_VER}.tar.gz && \
     tar xf ${SOURCE_DIR}/x265_${X265_VER}.tar.gz -C ${BUILD_DIR} && \
     cd ${BUILD_DIR}/x265_${X265_VER}/build/linux && \
     PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_SHARED=off ../../source && \
