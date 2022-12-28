@@ -22,6 +22,7 @@ RUN apt-get update && \
       libmp3lame-dev \
       libnuma-dev \
       libtool \
+      libunistring-dev \
       libvorbis-dev \
       meson \
       ninja-build \
