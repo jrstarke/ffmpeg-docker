@@ -13,6 +13,7 @@ RUN apt-get update && \
       automake \
       build-essential \
       cmake \
+      curl \
       git-core \
       libass-dev \
       libfreetype6-dev \
