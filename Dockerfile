@@ -16,7 +16,10 @@ RUN apt-get update && \
       cmake \
       curl \
       git-core \
+      libaom-dev \
       libass-dev \
+      libdav1d-dev \
+      libdrm-dev \
       libfreetype6-dev \
       libgnutls28-dev \
       libmp3lame-dev \
@@ -69,35 +72,38 @@ RUN curl -o ${SOURCE_DIR}/develop.tar.gz -L https://github.com/rockchip-linux/mp
 
 # Fetch and Install FFMPEG
 RUN curl -o ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -L http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
-    tar xf ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -C ${BUILD_DIR} #&& \
-#     cd ${BUILD_DIR}/ffmpeg* && \
-#    PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="${BUILD_DIR}/lib/pkgconfig" ./configure \
-#      --prefix="${BUILD_DIR}" \
-#      --pkg-config-flags="--static" \
-#      --extra-cflags="-I${BUILD_DIR}/include" \
-#      --extra-ldflags="-L${BUILD_DIR}/lib" \
-#      --extra-libs="-lpthread -lm" \
-#      --ld="g++" \
-#      --bindir="$BIN_DIR" \
-#      --enable-gpl \
-#      --enable-gnutls \
-#      --enable-libaom \
-#      --enable-libass \
-##      --enable-libfdk-aac \
-##      --enable-libfreetype \
-#      --enable-libmp3lame \
-##      --enable-libopus \
-##      --enable-libsvtav1 \
-##      --enable-libdav1d \
-##      --enable-libvorbis \
-##      --enable-libvpx \
-##      --enable-libx264 \
-##      --enable-libx265 \
-##      --enable-nonfree \
-#      --enable-decoder=h264_rkmpp \
-#      --enable-decoder=hevc_rkmpp \
-#      --enable-decoder=vp9_rkmpp \
-#    && \
-#    PATH="$BIN_DIR:$PATH" make && \
-#    make install && \
-#    hash -r
+    tar xf ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -C ${BUILD_DIR} && \
+    cd ${BUILD_DIR}/ffmpeg-${FFMPEG_VERSION} && \
+    PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="${BUILD_DIR}/lib/pkgconfig" ./configure \
+      --prefix="${BUILD_DIR}" \
+      --pkg-config-flags="--static" \
+      --extra-cflags="-I${BUILD_DIR}/include" \
+      --extra-ldflags="-L${BUILD_DIR}/lib" \
+      --extra-libs="-lpthread -lm" \
+      --ld="g++" \
+      --bindir="$BIN_DIR" \
+      --enable-gpl \
+      --enable-gnutls \
+      --enable-libaom \
+      --enable-libass \
+#      --enable-libfdk-aac \
+#      --enable-libfreetype \
+      --enable-libdrm \
+      --enable-libmp3lame \
+#      --enable-libopus \
+#      --enable-libsvtav1 \
+#      --enable-libdav1d \
+#      --enable-libvorbis \
+#      --enable-libvpx \
+#      --enable-libx264 \
+#      --enable-libx265 \
+#      --enable-nonfree \
+      --enable-rkmpp \
+      --enable-version3 \
+      --enable-decoder=h264_rkmpp \
+      --enable-decoder=hevc_rkmpp \
+      --enable-decoder=vp9_rkmpp \
+    && \
+    PATH="$BIN_DIR:$PATH" make && \
+    make install && \
+    hash -r
