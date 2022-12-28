@@ -9,7 +9,7 @@ ARG NASM_VERSION="2.15.05"
 ARG X265_VER="2.9"
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND="noninteractive" apt-get -y install --no-install-recommends \
+    DEBIAN_FRONTEND="noninteractive" apt-get -y install \
       autoconf \
       automake \
       build-essential \
