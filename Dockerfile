@@ -25,7 +25,6 @@ RUN apt-get update && \
       ninja-build \
       pkg-config \
       texinfo \
-      wget \
       yasm \
       zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
