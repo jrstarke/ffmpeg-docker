@@ -58,6 +58,12 @@ RUN curl -o ${SOURCE_DIR}/x265_${X265_VER}.tar.gz -L https://bitbucket.org/multi
     PATH="$HOME/bin:$PATH" make && \
     make install
 
+# rkmpp \
+RUN curl -o ${SOURCE_DIR}/develop.tar.gz -L https://github.com/rockchip-linux/mpp/archive/refs/heads/develop.tar.gz && \
+    tar xf ${SOURCE_DIR}/develop.tar.gz -C ${BUILD_DIR} && \
+    cd ${BUILD_DIR}/mpp-develop && \
+    PATH="$HOME/bin:$PATH" build/linux/aarch64/make-Makefiles.bash
+
 # Fetch and Install FFMPEG
 RUN curl -o ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -L http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
     tar xf ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -C ${BUILD_DIR} && \
