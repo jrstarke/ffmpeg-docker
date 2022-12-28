@@ -34,8 +34,8 @@ RUN apt-get update && \
 RUN mkdir -p ${SOURCE_DIR} ${BUILD_DIR} ${BIN_DIR}
 
 # NASM
-RUN curl -o ${SOURCE_DIR}/nasm.tar.bz2 -L https://www.nasm.us/pub/nasm/releasebuilds/${NASM_VERSION}/nasm-${NASM_VERSION}.tar.bz2 && \
-    tar xf ${SOURCE_DIR}/nasm.tar.bz2 -C ${BUILD_DIR} && \
+RUN curl -o ${SOURCE_DIR}/nasm-${NASM_VERSION}.tar.bz2 -L https://www.nasm.us/pub/nasm/releasebuilds/${NASM_VERSION}/nasm-${NASM_VERSION}.tar.bz2 && \
+    tar xf ${SOURCE_DIR}/nasm-${NASM_VERSION}.tar.bz2 -C ${BUILD_DIR} && \
     cd ${BUILD_DIR}/nasm-${NASM_VERSION} && \
     ./autogen.sh && \
     PATH="$BIN_DIR:$PATH" ./configure --prefix="${BUILD_DIR}" --bindir="${BIN_DIR}" && \
@@ -43,8 +43,8 @@ RUN curl -o ${SOURCE_DIR}/nasm.tar.bz2 -L https://www.nasm.us/pub/nasm/releasebu
     make install
 
 # x264
-RUN curl -o ${SOURCE_DIR}/last_x264.tar.bz2 -L http://download.videolan.org/pub/x264/snapshots/last_x264.tar.bz2 && \
-    tar xf ${SOURCE_DIR}/last_x264.tar.bz2 -C ${BUILD_DIR} && \
+RUN curl -o ${SOURCE_DIR}/x264-stable.tar.bz2 -L https://code.videolan.org/videolan/x264/-/archive/stable/x264-stable.tar.bz2 && \
+    tar xf ${SOURCE_DIR}/x264-stable.tar.bz2 -C ${BUILD_DIR} && \
     cd ${BUILD_DIR}/x264-snapshot* && \
     PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="${BUILD_DIR}/lib/pkgconfig" ./configure --prefix="${BUILD_DIR}" --bindir="$BIN_DIR" --enable-static --enable-pic && \
     PATH="$BIN_DIR:$PATH" make && \
