@@ -45,7 +45,7 @@ RUN curl -o ${SOURCE_DIR}/nasm-${NASM_VERSION}.tar.bz2 -L https://www.nasm.us/pu
 # x264
 RUN curl -o ${SOURCE_DIR}/x264-stable.tar.bz2 -L https://code.videolan.org/videolan/x264/-/archive/stable/x264-stable.tar.bz2 && \
     tar xf ${SOURCE_DIR}/x264-stable.tar.bz2 -C ${BUILD_DIR} && \
-    cd ${BUILD_DIR}/x264-snapshot* && \
+    cd ${BUILD_DIR}/x264-stable && \
     PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="${BUILD_DIR}/lib/pkgconfig" ./configure --prefix="${BUILD_DIR}" --bindir="$BIN_DIR" --enable-static --enable-pic && \
     PATH="$BIN_DIR:$PATH" make && \
     make install
@@ -74,14 +74,14 @@ RUN curl -o ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -L http://ffmpeg.org/
       --enable-gnutls \
       --enable-libaom \
       --enable-libass \
-      --enable-libfdk-aac \
-      --enable-libfreetype \
+#      --enable-libfdk-aac \
+#      --enable-libfreetype \
       --enable-libmp3lame \
-      --enable-libopus \
-      --enable-libsvtav1 \
-      --enable-libdav1d \
-      --enable-libvorbis \
-      --enable-libvpx \
+#      --enable-libopus \
+#      --enable-libsvtav1 \
+#      --enable-libdav1d \
+#      --enable-libvorbis \
+#      --enable-libvpx \
       --enable-libx264 \
       --enable-libx265 \
       --enable-nonfree && \
