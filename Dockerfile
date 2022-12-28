@@ -59,42 +59,44 @@ RUN curl -o ${SOURCE_DIR}/nasm-${NASM_VERSION}.tar.bz2 -L https://www.nasm.us/pu
 #    make install
 
 # rkmpp \
-#RUN curl -o ${SOURCE_DIR}/develop.tar.gz -L https://github.com/rockchip-linux/mpp/archive/refs/heads/develop.tar.gz && \
-#    tar xf ${SOURCE_DIR}/develop.tar.gz -C ${BUILD_DIR} && \
-#    cd ${BUILD_DIR}/mpp-develop && \
-#    PATH="$HOME/bin:$PATH" build/linux/aarch64/make-Makefiles.bash
+RUN curl -o ${SOURCE_DIR}/develop.tar.gz -L https://github.com/rockchip-linux/mpp/archive/refs/heads/develop.tar.gz && \
+    tar xf ${SOURCE_DIR}/develop.tar.gz -C ${BUILD_DIR} && \
+    cd ${BUILD_DIR}/mpp-develop/build/linux/aarch64 && \
+    PATH="$HOME/bin:$PATH" ./make-Makefiles.bash && \
+    PATH="$HOME/bin:$PATH" make && \
+    make install
 
 # Fetch and Install FFMPEG
-#RUN curl -o ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -L http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
-#    tar xf ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -C ${BUILD_DIR} && \
-#    cd ${BUILD_DIR}/ffmpeg* && \
-#    PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="${BUILD_DIR}/lib/pkgconfig" ./configure \
-#      --prefix="${BUILD_DIR}" \
-#      --pkg-config-flags="--static" \
-#      --extra-cflags="-I${BUILD_DIR}/include" \
-#      --extra-ldflags="-L${BUILD_DIR}/lib" \
-#      --extra-libs="-lpthread -lm" \
-#      --ld="g++" \
-#      --bindir="$BIN_DIR" \
-#      --enable-gpl \
-#      --enable-gnutls \
-#      --enable-libaom \
-#      --enable-libass \
-##      --enable-libfdk-aac \
-##      --enable-libfreetype \
-#      --enable-libmp3lame \
-##      --enable-libopus \
-##      --enable-libsvtav1 \
-##      --enable-libdav1d \
-##      --enable-libvorbis \
-##      --enable-libvpx \
-##      --enable-libx264 \
-##      --enable-libx265 \
-##      --enable-nonfree \
-#      --enable-decoder=h264_rkmpp \
-#      --enable-decoder=hevc_rkmpp \
-#      --enable-decoder=vp9_rkmpp \
-#    && \
-#    PATH="$BIN_DIR:$PATH" make && \
-#    make install && \
-#    hash -r
+RUN curl -o ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -L http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
+    tar xf ${SOURCE_DIR}/ffmpeg-${FFMPEG_VERSION}.tar.bz2 -C ${BUILD_DIR} && \
+    cd ${BUILD_DIR}/ffmpeg* && \
+    PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="${BUILD_DIR}/lib/pkgconfig" ./configure \
+      --prefix="${BUILD_DIR}" \
+      --pkg-config-flags="--static" \
+      --extra-cflags="-I${BUILD_DIR}/include" \
+      --extra-ldflags="-L${BUILD_DIR}/lib" \
+      --extra-libs="-lpthread -lm" \
+      --ld="g++" \
+      --bindir="$BIN_DIR" \
+      --enable-gpl \
+      --enable-gnutls \
+      --enable-libaom \
+      --enable-libass \
+#      --enable-libfdk-aac \
+#      --enable-libfreetype \
+      --enable-libmp3lame \
+#      --enable-libopus \
+#      --enable-libsvtav1 \
+#      --enable-libdav1d \
+#      --enable-libvorbis \
+#      --enable-libvpx \
+#      --enable-libx264 \
+#      --enable-libx265 \
+#      --enable-nonfree \
+      --enable-decoder=h264_rkmpp \
+      --enable-decoder=hevc_rkmpp \
+      --enable-decoder=vp9_rkmpp \
+    && \
+    PATH="$BIN_DIR:$PATH" make && \
+    make install && \
+    hash -r
